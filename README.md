@@ -177,19 +177,19 @@ Expected output:
 ```
 ----------------------------------------
 Metrics for Textual Faithfulness:
-Averaged Kendall's τc: 0.6378 ± 0.0749
-Averaged Spearman's ρ: 0.7058 ± 0.0833
-Krippendorff's α: 0.6960
+Averaged Kendall's τc: 0.6408 ± 0.0728
+Averaged Spearman’s ρ: 0.7095 ± 0.0810
+Krippendorff’s α: 0.6995
 ----------------------------------------
 Metrics for Frame Consistency:
-Averaged Kendall's τc: 0.6510 ± 0.0207
-Averaged Spearman's ρ: 0.7298 ± 0.0225
-Krippendorff's α: 0.6687
+Averaged Kendall's τc: 0.6505 ± 0.0226
+Averaged Spearman’s ρ: 0.7293 ± 0.0244
+Krippendorff’s α: 0.6688
 ----------------------------------------
 Metrics for Video Fidelity:
-Averaged Kendall's τc: 0.6125 ± 0.0297
-Averaged Spearman's ρ: 0.6938 ± 0.0299
-Krippendorff's α: 0.6625
+Averaged Kendall's τc: 0.6126 ± 0.0295
+Averaged Spearman’s ρ: 0.6935 ± 0.0299
+Krippendorff’s α: 0.6628
 ```
 
 ## MLLM Score Correlation with Human Annotations
