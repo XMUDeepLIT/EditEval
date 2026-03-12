@@ -213,3 +213,21 @@ python compute_correlation.py --labeled_csv labeled_full.csv --mllm_dir mllm_res
 ```bash
 python compute_correlation.py --labeled_csv labeled_full.csv --mllm_dir all
 ```
+
+## Citation
+
+If you find EditEval useful in your research, please cite our paper:
+
+```bibtex
+@inproceedings{liu2025editeval,
+  author    = {Bingshuai Liu and Ante Wang and Zijun Min and Chenyang Lyu and 
+               Longyue Wang and Zhihao Wang and Xu Han and Peng Li and Jinsong Su},
+  title     = {EditEval: Towards Comprehensive and Automatic Evaluation for Text-guided Video Editing},
+  booktitle = {Proceedings of the 33rd ACM International Conference on Multimedia (MM '25)},
+  year      = {2025},
+  pages     = {3507--3516},
+  publisher = {ACM},
+  doi       = {10.1145/3746027.3755100},
+  url       = {https://doi.org/10.1145/3746027.3755100}
+}
+```
