@@ -27,6 +27,17 @@ EditEval/
 │   ├── timechat/                    # TimeChat
 │   ├── videollama2/                 # VideoLLaMA2
 │   └── vila/                        # VILA-1.5-40B
+├── mllm-infer/
+│   ├── common.py                    # Shared utilities: criteria, prompt template, data loading
+│   ├── infer_vila.py                # VILA-1.5 inference
+│   ├── infer_qwen_vl.py            # Qwen-VL-Chat inference (image input, 4 sampled frames)
+│   ├── infer_video_llama2.py        # VideoLLaMA2 inference (supports multi-GPU parallel)
+│   ├── infer_timechat.py            # TimeChat inference
+│   ├── infer_llava_ov.py           # LLaVA-OneVision inference
+│   ├── infer_kangaroo.py            # Kangaroo inference
+│   ├── infer_llava_next.py          # LLaVA-NeXT-Video inference (7B/32B/34B)
+│   ├── README.md
+│   └── scripts/                     # Shell scripts for each model
 ├── annotations/
 │   ├── data_worker_1.csv            # Annotation results from annotator 1
 │   ├── data_worker_2.csv            # Annotation results from annotator 2
@@ -161,6 +172,51 @@ The `mllm_results/` directory contains inference outputs from 8 multimodal large
 | `timechat/` | TimeChat |
 | `videollama2/` | VideoLLaMA2 |
 | `vila/` | VILA-1.5-40B |
+
+## MLLM Inference Code
+
+The `mllm-infer/` directory provides inference scripts for reproducing MLLM evaluation results using open-source models. Each model scores edited videos on a 1–5 scale across three dimensions: **Textual Faithfulness**, **Frame Consistency**, and **Video Fidelity**.
+
+### Supported Models
+
+| Model | Conda Env | GitHub Repository | Launch Script |
+|-------|-----------|-------------------|---------------|
+| VILA-1.5-40B | `vila` | [NVlabs/VILA](https://github.com/NVlabs/VILA) | `run_vila.sh` |
+| Qwen-VL-Chat | `qwen` | [QwenLM/Qwen-VL](https://github.com/QwenLM/Qwen-VL) | `run_qwen_vl.sh` |
+| VideoLLaMA2-7B | `llama2` | [DAMO-NLP-SG/VideoLLaMA2](https://github.com/DAMO-NLP-SG/VideoLLaMA2) | `run_video_llama2.sh` |
+| TimeChat-7B | `timechat` | [RenShuhuai-Andy/TimeChat](https://github.com/RenShuhuai-Andy/TimeChat) | `run_timechat.sh` |
+| LLaVA-OneVision-7B | `llava` | [LLaVA-VL/LLaVA-NeXT](https://github.com/LLaVA-VL/LLaVA-NeXT) | `run_llava_ov.sh` |
+| Kangaroo | `kangaroo` | [KangarooGroup/Kangaroo](https://github.com/KangarooGroup/Kangaroo) | `run_kangaroo.sh` |
+| LLaVA-NeXT-Video-7B | `llava` | [LLaVA-VL/LLaVA-NeXT](https://github.com/LLaVA-VL/LLaVA-NeXT) | `run_llava_next_7b.sh` |
+| LLaVA-NeXT-Video-32B | `llava` | [LLaVA-VL/LLaVA-NeXT](https://github.com/LLaVA-VL/LLaVA-NeXT) | `run_llava_next_32b.sh` |
+| LLaVA-NeXT-Video-34B | `llava` | [LLaVA-VL/LLaVA-NeXT](https://github.com/LLaVA-VL/LLaVA-NeXT) | `run_llava_next_34b.sh` |
+
+### Running Inference
+
+Each model uses an isolated conda environment. Clone the corresponding GitHub repository and install dependencies following its README, then download model weights from HuggingFace.
+
+**Option 1: Shell Scripts**
+
+Edit `mllm-infer/scripts/run_<model>.sh` and fill in the path variables, then run:
+
+```bash
+cd mllm-infer
+bash scripts/run_kangaroo.sh          # Default: GPU 0
+bash scripts/run_kangaroo.sh 1        # Use GPU 1
+```
+
+**Option 2: Run Python Directly**
+
+```bash
+conda activate kangaroo
+CUDA_VISIBLE_DEVICES=0 python mllm-infer/infer_kangaroo.py \
+    --model-path /path/to/kangaroo \
+    --csv-path labeled_full.csv \
+    --video-root /path/to/videos \
+    --output-dir output/kangaroo
+```
+
+For more details, see [`mllm-infer/README.md`](mllm-infer/README.md).
 
 ## Human Annotation & Inter-Annotator Agreement
 

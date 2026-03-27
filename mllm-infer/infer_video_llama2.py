@@ -6,10 +6,6 @@ Setup:
   2. conda activate llama2
   3. Download VideoLLaMA2-7B-16F from HuggingFace
 
-Supports both single-GPU and multi-GPU parallel execution:
-  Single:  python infer_video_llama2.py --repo-dir /path/to/VideoLLaMA2 ...
-  Multi:   python infer_video_llama2.py --repo-dir ... --start-index 0 --end-index 319
-
 Usage:
   python infer_video_llama2.py --repo-dir /path/to/VideoLLaMA2 \
       --model-path /path/to/VideoLLaMA2-7B-16F \
@@ -37,10 +33,6 @@ def parse_args():
     parser.add_argument("--conv-mode", type=str, default="llama2")
     parser.add_argument("--temperature", type=float, default=0.2)
     parser.add_argument("--max-new-tokens", type=int, default=1024)
-    parser.add_argument("--start-index", type=int, default=None,
-                        help="Start index for parallel processing")
-    parser.add_argument("--end-index", type=int, default=None,
-                        help="End index (inclusive) for parallel processing")
     return parser.parse_args()
 
 
@@ -94,9 +86,6 @@ def main():
         return tokenizer.batch_decode(output_ids, skip_special_tokens=True)[0]
 
     samples = load_eval_dataset(args.csv_path, args.video_root)
-    if args.start_index is not None and args.end_index is not None:
-        samples = samples[args.start_index:args.end_index + 1]
-
     run_evaluation(samples, infer_fn, args.output_dir)
 
 

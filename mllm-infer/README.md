@@ -11,7 +11,7 @@ Evaluate video editing quality using various open-source Multimodal Large Langua
 ## Directory Structure
 
 ```
-opensource/
+mllm-infer/
 ├── common.py                  # Shared utilities: criteria, prompt template, data loading, result saving
 ├── infer_vila.py              # VILA-1.5 inference
 ├── infer_qwen_vl.py           # Qwen-VL-Chat inference (image input, 4 sampled frames)
@@ -25,7 +25,6 @@ opensource/
     ├── run_vila.sh
     ├── run_qwen_vl.sh
     ├── run_video_llama2.sh
-    ├── run_video_llama2_multi.sh   # Multi-GPU parallel version
     ├── run_timechat.sh
     ├── run_llava_ov.sh
     ├── run_kangaroo.sh
@@ -72,7 +71,6 @@ Download model weights from HuggingFace to a local directory.
 
 ## Quick Start
 
-### Option 1: Shell Scripts
 
 1. Edit `scripts/run_<model>.sh` and fill in the path variables at the top:
 
@@ -80,34 +78,15 @@ Download model weights from HuggingFace to a local directory.
 REPO_DIR="/path/to/cloned/repo"      # Path to the cloned repository
 MODEL_PATH="/path/to/model/weights"   # Path to model weights
 CSV_PATH="/path/to/labeled_full.csv"  # Evaluation data CSV
-VIDEO_ROOT="/path/to/videos"          # Directory containing video files
+VIDEO_ROOT="/path/to/videos"         # Directory containing video files
 ```
 
 2. Run:
 
 ```bash
-bash scripts/run_kangaroo.sh          # Default: GPU 0
-bash scripts/run_kangaroo.sh 1        # Use GPU 1
+bash scripts/run_kangaroo.sh
 ```
 
-### Option 2: Run Python Directly
-
-```bash
-conda activate kangaroo
-CUDA_VISIBLE_DEVICES=0 python infer_kangaroo.py \
-    --model-path /path/to/kangaroo \
-    --csv-path /path/to/labeled_full.csv \
-    --video-root /path/to/videos \
-    --output-dir output/kangaroo
-```
-
-### VideoLLaMA2 Multi-GPU Parallel
-
-```bash
-# After configuring path variables in scripts/run_video_llama2_multi.sh:
-bash scripts/run_video_llama2_multi.sh              # Default: 1280 samples, 8 workers
-bash scripts/run_video_llama2_multi.sh 1280 "0 0 1 1 2 2 3 3"  # Custom GPU layout
-```
 
 ## Data Format
 
